@@ -684,13 +684,14 @@ def get_characters(most_common: List):
                 Character.GUMSHOE,
                 Character.GROSSBERG,
             ]
-            rnd_character = random.choice(
-                list(
-                    filter(
-                        lambda character: character not in characters, rnd_characters
-                    )
+            available_characters = list(
+                filter(
+                    lambda character: character not in characters, rnd_characters
                 )
             )
+            if (len(available_characters) == 0):
+                available_characters = rnd_characters
+            rnd_character = random.choice(available_characters)
             characters[rnd_character] = character
     return characters
 
@@ -700,14 +701,7 @@ def comments_to_scene(comments: List, characters: Dict, **kwargs):
     inv_characters = {v: k for k, v in characters.items()}
     for comment in comments:
         blob = TextBlob(comment.body)
-        if (len(comment.body) >= 3 and blob.detect_language() != 'en'):
-            try:
-                polarity = blob.translate(to='en').sentiment.polarity
-            except exceptions.NotTranslated as e:
-                print(e)
-                polarity = blob.sentiment.polarity
-        else:
-            polarity = blob.sentiment.polarity
+        polarity = blob.sentiment.polarity
         tokens = nlp(comment.body)
         sentences = [sent.string.strip() for sent in tokens.sents]
         joined_sentences = []
