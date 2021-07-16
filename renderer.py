@@ -1,5 +1,6 @@
 from typing import List
 from utils import get_characters
+from constants import Character
 from beans.comment_bridge import CommentBridge
 from beans.comment import Comment
 from collections import Counter
@@ -17,7 +18,10 @@ def render_comment_list(comment_list: List[Comment], output_filename = 'hello.mp
         counter.update({comment.effective_user_id: 1})
     characters = get_characters(counter)
     for comment in comment_list:
-        comment.character = characters[comment.effective_user_id]
+        if comment.user_name == 'QuantumNova':
+            comment.character = Character.SKYE
+        else:
+            comment.character = characters[comment.effective_user_id]
         thread.append(CommentBridge(comment))
     if (output_filename[-4:] != '.mp4'):
         output_filename += '.mp4'
@@ -26,7 +30,7 @@ def render_comment_list(comment_list: List[Comment], output_filename = 'hello.mp
 def ensure_assets_are_available():
     if not os.path.exists('assets'):
         print('Assets not present. Downloading them')
-        response = requests.get('https://dl.luismayo.com/assets.zip')
+        response = requests.get('https://deepdive.gg/files/nova/assets.zip')
         with open('assets.zip', 'wb') as file:
             file.write(response.content)
         with zipfile.ZipFile('assets.zip', 'r') as zip_ref:

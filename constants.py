@@ -22,6 +22,7 @@ class Character():
     LOTTA = 'LOTTA'
     GUMSHOE = 'GUMSHOE'
     GROSSBERG = 'GROSSBERG'
+    SKYE='SKYE'
 
 
 class Location(IntEnum):
@@ -106,6 +107,12 @@ character_emotions = {
         "neutral": ["normal"],
         "sad": ["sweating"],
     },
+    Character.SKYE: {
+        "happy": ["happy", "confident"],
+        "neutral": ["normal", "thinking", "taking-notes"],
+        "sad": ["sad", "angry"]
+    }
+    ,
 }
 
 character_map = {
@@ -123,6 +130,7 @@ character_map = {
     Character.LOTTA: "assets/Sprites-lotta",
     Character.GUMSHOE: "assets/Sprites-gumshoe",
     Character.GROSSBERG: "assets/Sprites-grossberg",
+    Character.SKYE: "assets/Sprites-skye",
 }
 
 character_location_map = {
@@ -140,6 +148,7 @@ character_location_map = {
     Character.LOTTA: Location.WITNESS_STAND,
     Character.GUMSHOE: Location.WITNESS_STAND,
     Character.GROSSBERG: Location.WITNESS_STAND,
+    Character.SKYE: Location.WITNESS_STAND,
 }
 
 
